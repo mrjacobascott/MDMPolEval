@@ -116,7 +116,6 @@ public class PolicyList extends AppCompatActivity {
         // checking camera is disabled
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getCameraDisabled(android.content.ComponentName)
         Boolean cameraBlocked = dpm.getCameraDisabled(null);
-        //builtPolicy = builtPolicy + "Camera is disabled: " + cameraBlocked + pb;
 
         TableRow row2 = (TableRow) new TableRow(this);
         TextView setting2 = new TextView(this);
@@ -187,7 +186,7 @@ public class PolicyList extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getRequiredStrongAuthTimeout(android.content.ComponentName)";
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getDeviceOwnerLockScreenInfo()";
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         });
@@ -290,7 +289,7 @@ public class PolicyList extends AppCompatActivity {
         /////////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
+        //TODO add this, not really needed?
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getKeepUninstalledPackages(android.content.ComponentName)
 
         /////////////////////////////////////////////////////////////////////////
@@ -393,7 +392,7 @@ public class PolicyList extends AppCompatActivity {
         row12.addView(setting12);
         data12.setText(Long.toString(passwordExpirationTimeout));
         data12.setLayoutParams(lpD);
-        row12.addView(data11);
+        row12.addView(data12);
         button12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -406,89 +405,486 @@ public class PolicyList extends AppCompatActivity {
         tbl.addView(row12);
 
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordHistoryLength(android.content.ComponentName)
+        long passwordHistoryLength = dpm.getPasswordHistoryLength(null);
+
+        TableRow row13 = (TableRow) new TableRow(this);
+        TextView setting13 = new TextView(this);
+        TextView data13 = new TextView(this);
+        Button button13 = new Button(this);
+        setting13.setText("Password history length");
+        setting13.setLayoutParams(lpS);
+        row13.addView(setting13);
+        data13.setText(Long.toString(passwordHistoryLength));
+        data13.setLayoutParams(lpD);
+        row13.addView(data13);
+        button13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordHistoryLength(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button13.setLayoutParams(lpB);
+        row13.addView(button13);
+        tbl.addView(row13);
 
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMaximumLength(int)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLength(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLetters(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLowerCase(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNonLetter(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNumeric(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumSymbols(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumUpperCase(android.content.ComponentName)
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordQuality(android.content.ComponentName)
+        int passwordQuality = dpm.getPasswordQuality(null);
+
+        TableRow row15 = (TableRow) new TableRow(this);
+        TextView setting15 = new TextView(this);
+        TextView data15 = new TextView(this);
+        Button button15 = new Button(this);
+        setting15.setText("Password quality");
+        setting15.setLayoutParams(lpS);
+        row15.addView(setting15);
+        data15.setText(Integer.toString(passwordQuality));
+        data15.setLayoutParams(lpD);
+        row15.addView(data15);
+        button15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordQuality(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button15.setLayoutParams(lpB);
+        row15.addView(button15);
+        tbl.addView(row15);
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMaximumLength(int)
+        int passwordMaximumLength = dpm.getPasswordMaximumLength(passwordQuality);
+
+        TableRow row14 = (TableRow) new TableRow(this);
+        TextView setting14 = new TextView(this);
+        TextView data14 = new TextView(this);
+        Button button14 = new Button(this);
+        setting14.setText("Password max length based on above quality type");
+        setting14.setLayoutParams(lpS);
+        row14.addView(setting14);
+        data14.setText(Integer.toString(passwordMaximumLength));
+        data14.setLayoutParams(lpD);
+        row14.addView(data14);
+        button14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMaximumLength(int)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button14.setLayoutParams(lpB);
+        row14.addView(button14);
+        tbl.addView(row14);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLength(android.content.ComponentName)
+        int passwordMinimumLength = dpm.getPasswordMinimumLength(null);
+
+        TableRow row16 = (TableRow) new TableRow(this);
+        TextView setting16 = new TextView(this);
+        TextView data16 = new TextView(this);
+        Button button16 = new Button(this);
+        setting16.setText("Password minimum length");
+        setting16.setLayoutParams(lpS);
+        row16.addView(setting16);
+        data16.setText(Integer.toString(passwordMinimumLength));
+        data16.setLayoutParams(lpD);
+        row16.addView(data16);
+        button16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLength(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button16.setLayoutParams(lpB);
+        row16.addView(button16);
+        tbl.addView(row16);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLetters(android.content.ComponentName)
+        int passwordMinimumLetters = dpm.getPasswordMinimumLetters(null);
+
+        TableRow row17 = (TableRow) new TableRow(this);
+        TextView setting17 = new TextView(this);
+        TextView data17 = new TextView(this);
+        Button button17 = new Button(this);
+        setting17.setText("Password minimum letters");
+        setting17.setLayoutParams(lpS);
+        row17.addView(setting17);
+        data17.setText(Integer.toString(passwordMinimumLetters));
+        data17.setLayoutParams(lpD);
+        row17.addView(data17);
+        button17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLetters(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button17.setLayoutParams(lpB);
+        row17.addView(button17);
+        tbl.addView(row17);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLowerCase(android.content.ComponentName)
+        int passwordMinimumLowerCase = dpm.getPasswordMinimumLowerCase(null);
+
+        TableRow row18 = (TableRow) new TableRow(this);
+        TextView setting18 = new TextView(this);
+        TextView data18 = new TextView(this);
+        Button button18 = new Button(this);
+        setting18.setText("Password minimum lowercase");
+        setting18.setLayoutParams(lpS);
+        row18.addView(setting18);
+        data18.setText(Integer.toString(passwordMinimumLowerCase));
+        data18.setLayoutParams(lpD);
+        row18.addView(data18);
+        button18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumLowerCase(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button18.setLayoutParams(lpB);
+        row18.addView(button18);
+        tbl.addView(row18);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNonLetter(android.content.ComponentName)
+        int passwordMinimumNonLetter = dpm.getPasswordMinimumNonLetter(null);
+
+        TableRow row19 = (TableRow) new TableRow(this);
+        TextView setting19 = new TextView(this);
+        TextView data19 = new TextView(this);
+        Button button19 = new Button(this);
+        setting19.setText("Password minimum non-letter");
+        setting19.setLayoutParams(lpS);
+        row19.addView(setting19);
+        data19.setText(Integer.toString(passwordMinimumNonLetter));
+        data19.setLayoutParams(lpD);
+        row19.addView(data19);
+        button19.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNonLetter(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button19.setLayoutParams(lpB);
+        row19.addView(button19);
+        tbl.addView(row19);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNumeric(android.content.ComponentName)
+        int passwordMinimumNumeric = dpm.getPasswordMinimumNumeric(null);
+
+        TableRow row20 = (TableRow) new TableRow(this);
+        TextView setting20 = new TextView(this);
+        TextView data20 = new TextView(this);
+        Button button20 = new Button(this);
+        setting20.setText("Password minimum numeric");
+        setting20.setLayoutParams(lpS);
+        row20.addView(setting20);
+        data20.setText(Integer.toString(passwordMinimumNumeric));
+        data20.setLayoutParams(lpD);
+        row20.addView(data20);
+        button20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumNumeric(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button20.setLayoutParams(lpB);
+        row20.addView(button20);
+        tbl.addView(row20);
+
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumSymbols(android.content.ComponentName)
+        int passwordMinimumSymbols = dpm.getPasswordMinimumSymbols(null);
+
+        TableRow row21 = (TableRow) new TableRow(this);
+        TextView setting21 = new TextView(this);
+        TextView data21 = new TextView(this);
+        Button button21 = new Button(this);
+        setting21.setText("Password minimum symbols");
+        setting21.setLayoutParams(lpS);
+        row21.addView(setting21);
+        data21.setText(Integer.toString(passwordMinimumSymbols));
+        data21.setLayoutParams(lpD);
+        row21.addView(data21);
+        button21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumSymbols(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button21.setLayoutParams(lpB);
+        row21.addView(button21);
+        tbl.addView(row21);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumUpperCase(android.content.ComponentName)
+        int passwordMinimumUpperCase = dpm.getPasswordMinimumUpperCase(null);
+
+        TableRow row22 = (TableRow) new TableRow(this);
+        TextView setting22 = new TextView(this);
+        TextView data22 = new TextView(this);
+        Button button22 = new Button(this);
+        setting22.setText("Password minimum uppercase");
+        setting22.setLayoutParams(lpS);
+        row22.addView(setting22);
+        data22.setText(Integer.toString(passwordMinimumSymbols));
+        data22.setLayoutParams(lpD);
+        row22.addView(data22);
+        button22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPasswordMinimumUpperCase(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button22.setLayoutParams(lpB);
+        row22.addView(button22);
+        tbl.addView(row22);
+
+        /////////////////////////////////////////////////////////////////////////
+        //can't do without being profile owner
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getRequiredPasswordComplexity()
+
+        /////////////////////////////////////////////////////////////////////////
+        //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPermissionPolicy(android.content.ComponentName)
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
+        //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPermittedCrossProfileNotificationListeners(android.content.ComponentName)
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
+        //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getPersonalAppsSuspendedReasons(android.content.ComponentName)
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getStorageEncryption(android.content.ComponentName)
+        boolean commandedStorageEncryption = dpm.getStorageEncryption(null);
+
+        TableRow row24 = (TableRow) new TableRow(this);
+        TextView setting24 = new TextView(this);
+        TextView data24 = new TextView(this);
+        Button button24 = new Button(this);
+        setting24.setText("Encryption required");
+        setting24.setLayoutParams(lpS);
+        row24.addView(setting24);
+        data24.setText(Boolean.toString(commandedStorageEncryption));
+        data24.setLayoutParams(lpD);
+        row24.addView(data24);
+        button24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getStorageEncryption(android.content.ComponentName)";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button24.setLayoutParams(lpB);
+        row24.addView(button24);
+        tbl.addView(row24);
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getStorageEncryptionStatus()
+        int storageEncryptionStatus = dpm.getStorageEncryptionStatus();
+
+        TableRow row23 = (TableRow) new TableRow(this);
+        TextView setting23 = new TextView(this);
+        TextView data23 = new TextView(this);
+        Button button23 = new Button(this);
+        setting23.setText("Encryption Status");
+        setting23.setLayoutParams(lpS);
+        row23.addView(setting23);
+        data23.setText(Integer.toString(storageEncryptionStatus));
+        data23.setLayoutParams(lpD);
+        row23.addView(data23);
+        button23.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getStorageEncryptionStatus()";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button23.setLayoutParams(lpB);
+        row23.addView(button23);
+        tbl.addView(row23);
+
         /////////////////////////////////////////////////////////////////////////
         //TODO add this
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getSystemUpdatePolicy()
+        //https://developer.android.com/reference/android/app/admin/SystemUpdatePolicy
+        // this will need to be parsed out into several items as it returns a policy type
+
         /////////////////////////////////////////////////////////////////////////
-        //TODO add this
+        //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getTrustAgentConfiguration(android.content.ComponentName,%20android.content.ComponentName)
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this
-        //
+
+
 
 
         ///////////////////
         //TODO look through the 'isXYZ' options
 
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isDeviceIdAttestationSupported()
+        boolean isDeviceIdAttestationSupported = dpm.isDeviceIdAttestationSupported();
+
+        TableRow row25 = (TableRow) new TableRow(this);
+        TextView setting25 = new TextView(this);
+        TextView data25 = new TextView(this);
+        Button button25 = new Button(this);
+        setting25.setText("Is Device ID Attestation Supported");
+        setting25.setLayoutParams(lpS);
+        row25.addView(setting25);
+        data25.setText(Boolean.toString(isDeviceIdAttestationSupported));
+        data25.setLayoutParams(lpD);
+        row25.addView(data25);
+        button25.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isDeviceIdAttestationSupported()";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button25.setLayoutParams(lpB);
+        row25.addView(button25);
+        tbl.addView(row25);
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isUniqueDeviceAttestationSupported()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            boolean isUniqueDeviceAttestationSupported = dpm.isUniqueDeviceAttestationSupported();
+            TableRow row27 = (TableRow) new TableRow(this);
+            TextView setting27 = new TextView(this);
+            TextView data27 = new TextView(this);
+            Button button27 = new Button(this);
+            setting27.setText("StrongBox Keymaster attestation supported");
+            setting27.setLayoutParams(lpS);
+            row27.addView(setting27);
+            data27.setText(Boolean.toString(isUniqueDeviceAttestationSupported));
+            data27.setLayoutParams(lpD);
+            row27.addView(data27);
+            button27.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isOrganizationOwnedDeviceWithManagedProfile()";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }
+            });
+            button27.setLayoutParams(lpB);
+            row27.addView(button27);
+            tbl.addView(row27);
+
+        }
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isCommonCriteriaModeEnabled(android.content.ComponentName)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            boolean isCommonCriteriaModeEnabled = dpm.isCommonCriteriaModeEnabled(null);
+            TableRow row26 = (TableRow) new TableRow(this);
+            TextView setting26 = new TextView(this);
+            TextView data26 = new TextView(this);
+            Button button26 = new Button(this);
+            setting26.setText("Is Common Criteria Mode Enabled");
+            setting26.setLayoutParams(lpS);
+            row26.addView(setting26);
+            data26.setText(Boolean.toString(isCommonCriteriaModeEnabled));
+            data26.setLayoutParams(lpD);
+            row26.addView(data26);
+            button26.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isCommonCriteriaModeEnabled(android.content.ComponentName)";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }
+            });
+            button26.setLayoutParams(lpB);
+            row26.addView(button26);
+            tbl.addView(row26);
+        }
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isOrganizationOwnedDeviceWithManagedProfile()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            boolean isOrganizationOwnedDeviceWithManagedProfile = dpm.isOrganizationOwnedDeviceWithManagedProfile();
+            TableRow row28 = (TableRow) new TableRow(this);
+            TextView setting28 = new TextView(this);
+            TextView data28 = new TextView(this);
+            Button button28 = new Button(this);
+            setting28.setText("Was device provisioned as org owned device");
+            setting28.setLayoutParams(lpS);
+            row28.addView(setting28);
+            data28.setText(Boolean.toString(isOrganizationOwnedDeviceWithManagedProfile));
+            data28.setLayoutParams(lpD);
+            row28.addView(data28);
+            button28.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isOrganizationOwnedDeviceWithManagedProfile()";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }
+            });
+            button28.setLayoutParams(lpB);
+            row28.addView(button28);
+            tbl.addView(row28);
+
+        }
+
+        /////////////////////////////////////////////////////////////////////////
+        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isUsbDataSignalingEnabled()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            boolean isUsbDataSignalingEnabled = dpm.isUsbDataSignalingEnabled();
+            TableRow row29 = (TableRow) new TableRow(this);
+            TextView setting29 = new TextView(this);
+            TextView data29 = new TextView(this);
+            Button button29 = new Button(this);
+            setting29.setText("Is USB Data Signaling Enabled");
+            setting29.setLayoutParams(lpS);
+            row29.addView(setting29);
+            data29.setText(Boolean.toString(isUsbDataSignalingEnabled));
+            data29.setLayoutParams(lpD);
+            row29.addView(data29);
+            button29.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isUsbDataSignalingEnabled()";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }
+            });
+            button29.setLayoutParams(lpB);
+            row29.addView(button29);
+            tbl.addView(row29);
+
+        }
+
+
+
+
+
+
+
+
         //I need to return the policy
-        policyList.setText(builtPolicy);
+        //policyList.setText(builtPolicy);
     }
+
 
     private void createToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
+
+
+
