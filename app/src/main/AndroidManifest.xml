@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDMPolEval">
         <activity
+            android:name=".certViewer"
+            android:exported="false" />
+        <activity
             android:name=".PolicyList"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MDMPolEval.NoActionBar">
+            android:theme="@style/Theme.MDMPolEval">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -17,39 +17,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
-            android:id="@+id/search"
+        <TableLayout
+            android:id="@+id/tblHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:shrinkColumns="2"
+            android:stretchColumns="*" />
 
-            <ScrollView
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:scrollIndicators="right"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TableLayout
+                    android:id="@+id/table"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/policy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <TableLayout
-                        android:id="@+id/table"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:shrinkColumns="2"
-                        android:stretchColumns="*" />
-                </LinearLayout>
-            </ScrollView>
-
-        </SearchView>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:shrinkColumns="2"
+                    android:stretchColumns="*" />
+            </LinearLayout>
+        </ScrollView>
 
 
     </LinearLayout>

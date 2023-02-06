@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.UserManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,24 +26,29 @@ import android.widget.Toast;
 import java.util.List;
 
 public class PolicyList extends AppCompatActivity {
-    TextView policyList;
-    //private Object DevicePolicyManager;
+    //TODOs
+    // make the back button experience better
+    // export the table
+    // enum calculation?
+    // optimize the code?
+    // do the updates stuffs
+    // see if there is a workaround for non-owning apps to get things like password complexity
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_policy_list);
+        setTitle("MDM Policy Evaluator");
         createToast("Importing Policy");
         String pb = System.getProperty("line.separator");
-        this.policyList = findViewById(R.id.policy);
-        String builtPolicy = "";
 
         // init table info and styling
         ViewGroup.LayoutParams lpS = new TableRow.LayoutParams(0, ActionBar.LayoutParams.WRAP_CONTENT, (float) .45);
         ViewGroup.LayoutParams lpD = new TableRow.LayoutParams(0, ActionBar.LayoutParams.WRAP_CONTENT, (float) .45);
         ViewGroup.LayoutParams lpB = new TableRow.LayoutParams(0, ActionBar.LayoutParams.WRAP_CONTENT, (float) .1);
 
+        TableLayout tblHeader = (TableLayout) findViewById(R.id.tblHeader);
         TableLayout tbl = (TableLayout) findViewById(R.id.table);
         System.out.println(tbl);
         TableRow initRow = (TableRow) new TableRow(this);
@@ -59,22 +65,49 @@ public class PolicyList extends AppCompatActivity {
         linkHeading.setText("Link");
         linkHeading.setLayoutParams(lpB);
         initRow.addView(linkHeading);
-        tbl.addView(initRow);
+        tblHeader.addView(initRow);
 
+        View v1 = new View(this);
+        v1.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
+        v1.setBackgroundColor(Color.rgb(51, 51, 51));
+        tblHeader.addView(v1);
 
-        View v = new View(this);
-        v.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        v.setBackgroundColor(Color.rgb(51, 51, 51));
-        tbl.addView(v);
-
+        View v2 = new View(this);
+        v2.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
+        v2.setBackgroundColor(Color.rgb(51, 51, 51));
+        tbl.addView(v2);
 
         //create the different managers
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
         UserManager umgr = (UserManager)getSystemService(USER_SERVICE);
-        //DeviceAdminReceiver dar = (DeviceAdminReceiver) getSystemService(DEVICE_POLICY_SERVICE);
-        //ComponentName admin = (DeviceAdminReceiver) .getWho();
 
         // here is where I start importing policy
+        ///////////////////////////////////////////////////////////////////////////
+        // listing api version of device
+        int apiVersion = android.os.Build.VERSION.SDK_INT;
+
+        TableRow row30 = (TableRow) new TableRow(this);
+        TextView setting30 = new TextView(this);
+        TextView data30 = new TextView(this);
+        Button button30 = new Button(this);
+
+        setting30.setText("Device API version");
+        setting30.setLayoutParams(lpS);
+        row30.addView(setting30);
+        data30.setText(Integer.toString(apiVersion));
+        data30.setLayoutParams(lpD);
+        row30.addView(data30);
+        button30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("mdmpoleval","Launching browser");
+                String url = "https://developer.android.com/reference/android/os/Build.VERSION#SDK_INT";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+        button30.setLayoutParams(lpB);
+        row30.addView(button30);
+        tbl.addView(row30);
         ///////////////////////////////////////////////////////////////////////////
         // checking if app is ran in work profile
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getActiveAdmins()
@@ -82,16 +115,12 @@ public class PolicyList extends AppCompatActivity {
         String admins = "";
         if (activeAdmins != null){
             for (ComponentName admin : activeAdmins){
-                admins = admins + " " + admin.getPackageName();
+                admins = admin.getPackageName() + " " + admins;
             }
-            //admins = "Running with a management agent present" + pb + "The management agent is: " + admins + pb;
         } else {
             admins = "Not Managed" + pb;
         }
-        //builtPolicy = admins;
-
         TableRow row1 = (TableRow) new TableRow(this);
-        //row1.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT));
         TextView setting1 = new TextView(this);
         TextView data1 = new TextView(this);
         Button button1 = new Button(this);
@@ -104,6 +133,7 @@ public class PolicyList extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("mdmpoleval","Launching browser");
                 String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getActiveAdmins()";
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
@@ -131,6 +161,7 @@ public class PolicyList extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("mdmpoleval","Launching browser");
                 String url = "https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getCameraDisabled(android.content.ComponentName)";
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
@@ -144,7 +175,6 @@ public class PolicyList extends AppCompatActivity {
         // since last strong method authentication (password, pin or pattern) was used.
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getRequiredStrongAuthTimeout(android.content.ComponentName)
         long strongAuthTimeout = dpm.getRequiredStrongAuthTimeout(null);
-        //builtPolicy = builtPolicy + "Strong Auth Timeout (ms): " + strongAuthTimeout + pb;
 
         TableRow row3 = (TableRow) new TableRow(this);
         TextView setting3 = new TextView(this);
@@ -171,7 +201,6 @@ public class PolicyList extends AppCompatActivity {
         // device owner lock screen info,
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getDeviceOwnerLockScreenInfo()
         CharSequence doLockScreen = dpm.getDeviceOwnerLockScreenInfo();
-        //builtPolicy = builtPolicy + "Device owner lock screen info: " + doLockScreen + pb;
 
         TableRow row4 = (TableRow) new TableRow(this);
         TextView setting4 = new TextView(this);
@@ -236,7 +265,6 @@ public class PolicyList extends AppCompatActivity {
 
 
         if (restrictions.keySet().size()>0){
-            builtPolicy = builtPolicy + "Restrictions applied to user: " + pb;
 
             for (String key : restrictions.keySet()){
                 TableRow row6 = (TableRow) new TableRow(this);
@@ -286,13 +314,7 @@ public class PolicyList extends AppCompatActivity {
             tbl.addView(row6);
         }
 
-        /////////////////////////////////////////////////////////////////////////
-
-        /////////////////////////////////////////////////////////////////////////
-        //TODO add this, not really needed?
-        //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getKeepUninstalledPackages(android.content.ComponentName)
-
-        /////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////
         //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getManagedProfileMaximumTimeOff(android.content.ComponentName)
 
@@ -440,7 +462,28 @@ public class PolicyList extends AppCompatActivity {
         setting15.setText("Password quality");
         setting15.setLayoutParams(lpS);
         row15.addView(setting15);
-        data15.setText(Integer.toString(passwordQuality));
+        //data15.setText(Integer.toString(passwordQuality));
+
+        if(passwordQuality == 0){
+            data15.setText("PASSWORD_QUALITY_UNSPECIFIED " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 32768){
+            data15.setText("PASSWORD_QUALITY_BIOMETRIC_WEAK " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 65536){
+            data15.setText("PASSWORD_QUALITY_SOMETHING " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 131072){
+            data15.setText("PASSWORD_QUALITY_NUMERIC " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 196608){
+            data15.setText("PASSWORD_QUALITY_NUMERIC_COMPLEX " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 262144){
+            data15.setText("PASSWORD_QUALITY_ALPHABETIC " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 327680){
+            data15.setText("PASSWORD_QUALITY_ALPHANUMERIC " + "(" + Integer.toString(passwordQuality) + ")");
+        } else if (passwordQuality == 393216){
+            data15.setText("PASSWORD_QUALITY_COMPLEX " + "(" + Integer.toString(passwordQuality) + ")");
+        } else {
+            data15.setText("Unknown value for password quality: " + passwordQuality);
+        }
+
         data15.setLayoutParams(lpD);
         row15.addView(data15);
         button15.setOnClickListener(new View.OnClickListener() {
@@ -731,16 +774,9 @@ public class PolicyList extends AppCompatActivity {
         //can't do without being profile owner
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#getTrustAgentConfiguration(android.content.ComponentName,%20android.content.ComponentName)
 
-
-
-
-        ///////////////////
-        //TODO look through the 'isXYZ' options
-
         /////////////////////////////////////////////////////////////////////////
         //https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isDeviceIdAttestationSupported()
         boolean isDeviceIdAttestationSupported = dpm.isDeviceIdAttestationSupported();
-
         TableRow row25 = (TableRow) new TableRow(this);
         TextView setting25 = new TextView(this);
         TextView data25 = new TextView(this);
@@ -868,22 +904,12 @@ public class PolicyList extends AppCompatActivity {
             tbl.addView(row29);
 
         }
-
-
-
-
-
-
-
-
-        //I need to return the policy
-        //policyList.setText(builtPolicy);
     }
-
 
     private void createToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
 }
 
 
