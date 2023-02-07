@@ -29,7 +29,20 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="34sp"
             tools:ignore="TouchTargetSizeCheck" />
-
+<!--
+        <TextView
+            android:id="@+id/viewCerts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="View Certificates"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="34sp"
+            tools:ignore="TouchTargetSizeCheck" />
+-->
     </LinearLayout>
 
     <!-- this is the email button

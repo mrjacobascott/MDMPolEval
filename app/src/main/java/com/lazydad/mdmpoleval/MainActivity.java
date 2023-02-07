@@ -35,13 +35,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        //SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        //ViewPager viewPager = binding.viewPager;
-        //viewPager.setAdapter(sectionsPagerAdapter);
-        //TabLayout tabs = binding.tabs;
-        //tabs.setupWithViewPager(viewPager);
-        //ImportPolicy importPolicy = new ImportPolicy();
+        /*
+        TextView viewCerts = (TextView) findViewById(R.id.viewCerts);
+        viewCerts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("mdmpoleval","launching cert viewer");
+                Intent i = new Intent(MainActivity.this, certViewer.class);
+                startActivity(i);
+            }
+        });
+        */
 
     }
 
